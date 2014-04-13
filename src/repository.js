@@ -25,6 +25,7 @@ _.extend(Repository.prototype, {
       })
     })
   }
+
 , changedFiles: function (callback) {
     var gitStatus = spawn('git', ['status', '--short'], {
       cwd: this.path
@@ -40,7 +41,34 @@ _.extend(Repository.prototype, {
       callback(files)
     })
   }
-})
 
+, add: function (path, callback) {
+    var gitAdd = spawn('git', ['add', path], {
+      cwd: this.path
+    })
+    gitAdd.on('close', callback)
+  }
+
+, commit: function (message) {
+    var self = this
+
+    var makeCommit = function (msg) {
+      self.add('.', function () {
+        var gitStatus = spawn('git', ['commit', '-m', msg], {
+          cwd: self.path
+        })
+      })
+    }
+
+    if (!message) {
+      self.changedFiles (function (files) {
+        message = 'Changed ' + files.join(', ')
+        makeCommit(message)
+      })
+    } else {
+      makeCommit(message)
+    }
+  }
+})
 
 module.exports = Repository
