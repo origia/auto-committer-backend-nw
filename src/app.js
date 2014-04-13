@@ -2,5 +2,5 @@
   , RepoManager = require('./repo_manager')
 
 
-var manager = new RepoManager("foo", {url :"tmp/foo"})
+var manager = new RepoManager("/tmp/fooInit", {url :"hohohoho/hohoho.com"})
 
