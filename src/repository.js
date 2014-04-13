@@ -86,18 +86,18 @@ _.extend(Repository.prototype, {
     }
     var self = this
     this.isWatching = true
-    chokidar.watch(this.path).on('all', function(evt, path) {
+    chokidar.watch(this.path, {ignored: /[\/\\]\./}).on('all', function(evt, path) {
       try {
         self.diffStats(function (stats) {
-          console.log(stats)
           if(stats.insertionsNumber + stats.deletionsNumber >= 10) {
             self.changedFiles(function (files) {
               self.commit()
+              self.push()
             })
           }
         })
       } catch(e) {
-        console.log(e)
+        logger.error(e)
       }
     })
   }
