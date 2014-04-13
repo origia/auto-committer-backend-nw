@@ -1,5 +1,3 @@
 "use strict";
 
-module.exports = {
-                   RepositoryManager: require('./repo_manager')
-                 }
+module.exports = require('./repo_manager')
