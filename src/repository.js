@@ -1,5 +1,6 @@
 var _     = require('underscore')
   , spawn = require('child_process').spawn
+  , chokidar = require('chokidar')
 
 
 var Repository = function (path, options) {
@@ -77,6 +78,23 @@ _.extend(Repository.prototype, {
     if (callback) {
       gitPush.on('close', callback)
     }
+  }
+
+, startWatch: function () {
+    if (this.isWatching) {
+      return
+    }
+    var self = this
+    this.isWatching = true
+    chokidar.watch(this.path).on('all', function(evt, path) {
+        self.diffStats(function (stats) {
+          if(stats.insertionsNumber + stats.deletionsNumber >= 10) {
+            self.changedFiles(function (files) {
+              self.commit()
+            })
+          }
+        })
+    })
   }
 })
 
