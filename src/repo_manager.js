@@ -1,26 +1,26 @@
 var _ = require('underscore')
-var Repo = require("nodegit").Repo
-var logger = require('./logger')
+  , Repo = require("nodegit").Repo
+  , logger = require('./logger')
 
-var RepoManager=function(path,options){
-	if(options.url){
-		this.clone(options.url);
-	}
+var RepoManager = function (path, options) {
+  this.path = path
+  if (options.url) {
+    this.clone(options.url)
+  }
 }
 
-_.extend(RepoManager.prototype,{
-	clone:function(url){
-		Repo.clone("https://github.com/nodegit/nodegit","/tmp/foo",null,function(err, repo) {
-	  		if (err) {
-	    		throw err;
-	  		}else{
-	  			this.repo=repo;
-	  			logger.info(url);
-	  		}
-		})
-	},
-	bar:function(){
-
-	}
+_.extend(RepoManager.prototype, {
+  clone:function(url) {
+    Repo.clone(this.path, url, null, function(err, repo) {
+        if (err) {
+          throw err
+        } else {
+          this.repo = repo
+          logger.info(url)
+        }
+    })
+  }
 })
+
+
 module.exports = RepoManager

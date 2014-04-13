@@ -1,7 +1,6 @@
-var logger = require('./logger')
-var RepoManager = require('./repo_manager')
-logger.debug('foobar')
-logger.info('barbaz')
+  var logger    = require('./logger')
+  , RepoManager = require('./repo_manager')
 
-var manager = new RepoManager("foo", {url:"tmp/foo"})
+
+var manager = new RepoManager("foo", {url :"tmp/foo"})
 
