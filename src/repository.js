@@ -19,9 +19,9 @@ _.extend(Repository.prototype, {
         stats = [null, 0, 0, 0]
       }
       callback({
-        changedFilesNumber: stats[1]
-      , additionsNumber: stats[2]
-      , deletionsNumber: stats[3]
+        changedFilesNumber: parseInt(stats[1], 10)
+      , insertionsNumber: parseInt(stats[2], 10)
+      , deletionsNumber: parseInt(stats[3], 10)
       })
     })
   }
