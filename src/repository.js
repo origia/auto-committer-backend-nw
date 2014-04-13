@@ -69,6 +69,13 @@ _.extend(Repository.prototype, {
       makeCommit(message)
     }
   }
+
+, push: function (callback) {
+    var gitPush = spawn('git', ['push'], {
+      cwd: this.path
+    })
+    gitPush.on('close', callback)
+  }
 })
 
 module.exports = Repository
