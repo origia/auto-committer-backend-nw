@@ -87,13 +87,14 @@ _.extend(Repository.prototype, {
     var self = this
     this.isWatching = true
     chokidar.watch(this.path).on('all', function(evt, path) {
-        self.diffStats(function (stats) {
-          if(stats.insertionsNumber + stats.deletionsNumber >= 10) {
-            self.changedFiles(function (files) {
-              self.commit()
-            })
-          }
-        })
+      self.diffStats(function (stats) {
+        console.log(stats)
+        if(stats.insertionsNumber + stats.deletionsNumber >= 10) {
+          self.changedFiles(function (files) {
+            self.commit()
+          })
+        }
+      })
     })
   }
 })
