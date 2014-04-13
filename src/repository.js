@@ -74,7 +74,9 @@ _.extend(Repository.prototype, {
     var gitPush = spawn('git', ['push'], {
       cwd: this.path
     })
-    gitPush.on('close', callback)
+    if (callback) {
+      gitPush.on('close', callback)
+    }
   }
 })
 
